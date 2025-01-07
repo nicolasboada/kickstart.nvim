@@ -160,6 +160,42 @@ vim.opt.scrolloff = 10
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- LazyGit
+vim.keymap.set('n', '<leader>lg', function()
+  local lazygit_cmd = 'lazygit'
+
+  -- Crear un buffer temporal
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  -- Definir las dimensiones y posición de la ventana flotante
+  local width = math.floor(vim.o.columns * 0.9)
+  local height = math.floor(vim.o.lines * 0.8)
+  local row = math.floor((vim.o.lines - height) / 2)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  -- Crear la ventana flotante
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    border = 'rounded',
+  })
+
+  -- Abrir LazyGit en el terminal
+  vim.fn.termopen(lazygit_cmd, {
+    on_exit = function()
+      vim.api.nvim_buf_delete(buf, { force = true }) -- Eliminar el buffer automáticamente al cerrar LazyGit
+    end,
+  })
+  -- Configurar cierre del buffer con `q`
+  vim.api.nvim_buf_set_keymap(buf, 'n', 'q', '<cmd>close<CR>', { noremap = true, silent = true })
+  -- Entrar automáticamente al modo terminal
+  vim.api.nvim_set_current_win(win)
+  vim.cmd 'startinsert'
+end, { desc = 'Open LazyGit in floating terminal' })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
