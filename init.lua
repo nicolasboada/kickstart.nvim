@@ -160,6 +160,49 @@ vim.opt.scrolloff = 10
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- Mappings propios
+vim.api.nvim_set_keymap('n', '<A-k>', 'dd<Up>P', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-j>', 'ddp', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'H', '^', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'L', '$', { noremap = true, silent = true })
+
+-- terminal
+-- Abrir terminal horizontal
+vim.keymap.set('n', '<leader>tt', function()
+  vim.cmd 'split | terminal'
+  vim.cmd 'startinsert'
+end, { desc = 'Open terminal in horizontal split' })
+
+-- Abrir terminal vertical
+vim.keymap.set('n', '<leader>tv', function()
+  vim.cmd 'vsplit | terminal'
+  vim.cmd 'startinsert'
+end, { desc = 'Open terminal in vertical split' })
+
+-- Abrir terminal flotante
+vim.keymap.set('n', '<leader>tf', function()
+  local buf = vim.api.nvim_create_buf(false, true)
+  local width = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+  local row = math.floor((vim.o.lines - height) / 2)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    border = 'rounded',
+  })
+
+  vim.fn.termopen 'zsh'
+  vim.cmd 'startinsert'
+end, { desc = 'Open floating terminal' })
+
+-- Salir del terminal con <Esc>
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>:close<CR>]], { noremap = true, silent = true })
+
 -- LazyGit
 vim.keymap.set('n', '<leader>lg', function()
   local lazygit_cmd = 'lazygit'
@@ -943,7 +986,15 @@ require('lazy').setup({
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
-
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
