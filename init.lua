@@ -213,11 +213,21 @@ end, { desc = 'Open floating terminal or reuse existing one' })
 -- Salir del terminal con <Esc> y cerrar la ventana
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>:close<CR>]], { noremap = true, silent = true })
 
--- Mappings para cambio de ventana en terminal
+-- Mapeo para cambiar ventana en modo terminal (solo en terminal)
 vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]], { noremap = true, silent = true })
-vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]], { noremap = true, silent = true })
-vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]], { noremap = true, silent = true })
 vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]], { noremap = true, silent = true })
+vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]], { noremap = true, silent = true })
+-- vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]], { noremap = true, silent = true })
+
+-- Ctrl+L solo para limpiar la terminal en el modo terminal
+-- vim.keymap.set('t', '<C-l>', [[<C-\><C-n>^L]], { noremap = true, silent = true })
+
+-- Salir de la terminal con <Esc> y cerrar la ventana
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>:close<CR>]], { noremap = true, silent = true })
+
+-- Reasignar otros mapeos si es necesario, por ejemplo Ctrl+L en modo normal para limpiar la terminal
+vim.keymap.set('n', '<C-l>', ':split | terminal<CR>', { noremap = true, silent = true })
+
 -- LazyGit
 vim.keymap.set('n', '<leader>lg', function()
   local lazygit_cmd = 'lazygit'
