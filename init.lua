@@ -167,6 +167,9 @@ vim.api.nvim_set_keymap('n', 'H', '^', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'L', '$', { noremap = true, silent = true })
 
 -- terminal
+-- Variable para reutilizar el buffer de la terminal flotante
+local floating_terminal_buf = nil
+
 -- Abrir terminal horizontal
 vim.keymap.set('n', '<leader>tt', function()
   vim.cmd 'split | terminal'
@@ -181,34 +184,40 @@ end, { desc = 'Open terminal in vertical split' })
 
 -- Abrir terminal flotante
 vim.keymap.set('n', '<leader>tf', function()
-  local buf = vim.api.nvim_create_buf(false, true)
-  local width = math.floor(vim.o.columns * 0.8)
-  local height = math.floor(vim.o.lines * 0.8)
-  local row = math.floor((vim.o.lines - height) / 2)
-  local col = math.floor((vim.o.columns - width) / 2)
+  if floating_terminal_buf and vim.api.nvim_buf_is_valid(floating_terminal_buf) then
+    -- Reutilizar el buffer existente
+    vim.api.nvim_set_current_buf(floating_terminal_buf)
+  else
+    -- Crear un nuevo buffer y ventana flotante
+    floating_terminal_buf = vim.api.nvim_create_buf(false, true)
+    local width = math.floor(vim.o.columns * 0.8)
+    local height = math.floor(vim.o.lines * 0.8)
+    local row = math.floor((vim.o.lines - height) / 2)
+    local col = math.floor((vim.o.columns - width) / 2)
 
-  vim.api.nvim_open_win(buf, true, {
-    relative = 'editor',
-    width = width,
-    height = height,
-    row = row,
-    col = col,
-    border = 'rounded',
-  })
+    vim.api.nvim_open_win(floating_terminal_buf, true, {
+      relative = 'editor',
+      width = width,
+      height = height,
+      row = row,
+      col = col,
+      border = 'rounded',
+    })
 
-  vim.fn.termopen 'zsh'
-  vim.cmd 'startinsert'
-end, { desc = 'Open floating terminal' })
+    -- Iniciar una nueva terminal
+    vim.fn.termopen 'zsh'
+    vim.cmd 'startinsert'
+  end
+end, { desc = 'Open floating terminal or reuse existing one' })
 
--- Salir del terminal con <Esc>
+-- Salir del terminal con <Esc> y cerrar la ventana
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>:close<CR>]], { noremap = true, silent = true })
 
--- mappings para cambio de ventana en terminal
+-- Mappings para cambio de ventana en terminal
 vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]], { noremap = true, silent = true })
 vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]], { noremap = true, silent = true })
 vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]], { noremap = true, silent = true })
 vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]], { noremap = true, silent = true })
-
 -- LazyGit
 vim.keymap.set('n', '<leader>lg', function()
   local lazygit_cmd = 'lazygit'
