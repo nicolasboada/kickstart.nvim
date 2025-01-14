@@ -166,6 +166,16 @@ vim.api.nvim_set_keymap('n', '<A-j>', 'ddp', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'H', '^', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'L', '$', { noremap = true, silent = true })
 
+-- -- Gestor de proyectos
+-- require('project_nvim').setup {
+--   detection_methods = { 'lsp', 'pattern' },
+--   patterns = { '.git', 'Makefile', 'package.json' },
+-- }
+
+-- Integrar con Telescope para abrir proyectos rápidamente
+-- require('telescope').load_extension 'projects'
+vim.keymap.set('n', '<leader>fp', ':Telescope projects<CR>', { desc = 'Find Project' })
+
 -- terminal
 -- Variable para reutilizar el buffer de la terminal flotante
 local floating_terminal_buf = nil
@@ -1019,6 +1029,16 @@ require('lazy').setup({
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},
+  },
+  -- gestor de proyectos
+  {
+    'ahmedkhalf/project.nvim',
+    config = function()
+      require('project_nvim').setup {
+        detection_methods = { 'lsp', 'pattern' },
+        patterns = { '.git', 'Makefile', 'package.json' },
+      }
+    end,
   },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
