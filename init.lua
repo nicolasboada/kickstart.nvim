@@ -160,6 +160,9 @@ vim.opt.scrolloff = 10
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- settings propios
+vim.opt.smartindent = true
+
 -- Mappings propios
 vim.api.nvim_set_keymap('n', '<A-k>', 'dd<Up>P', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-j>', 'ddp', { noremap = true, silent = true })
