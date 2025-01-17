@@ -1043,6 +1043,18 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    config = function()
+      require('copilot').setup {
+        suggestion = {
+          auto_trigger = true,
+        },
+      }
+    end,
+  },
   -- avante
   {
     'yetone/avante.nvim',
@@ -1050,17 +1062,30 @@ require('lazy').setup({
     lazy = false,
     version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
     opts = {
-      -- add any opts here
-      provider = 'openai',
-      openai = {
-        --   endpoint = "https://api.openai.com/v1",
-        model = 'gpt-4o-mini', -- Cambia el modelo si es necesario
-        --   -- api_key = "TU_API_KEY_DE_OPENAI", -- Asegúrate de reemplazar con tu clave
-        --   timeout = 30000,
-        --   temperature = 0.7,
-        --   max_tokens = 2000,
+      provider = 'copilot',
+      copilot = {
+        endpoint = 'https://api.githubcopilot.com',
+        model = 'gpt-4o-2024-08-06',
+        -- model = 'gpt-4o-mini', -- Cambia el modelo si es necesario
+        proxy = nil, -- [protocol://]host[:port] Use this proxy
+        allow_insecure = false, -- Allow insecure server connections
+        timeout = 30000, -- Timeout in milliseconds
+        temperature = 0,
+        max_tokens = 4096,
       },
     },
+    -- opts = {
+    --   -- add any opts here
+    --   provider = 'openai',
+    --   openai = {
+    --     --   endpoint = "https://api.openai.com/v1",
+    --     model = 'gpt-4o-mini', -- Cambia el modelo si es necesario
+    --     --   -- api_key = "TU_API_KEY_DE_OPENAI", -- Asegúrate de reemplazar con tu clave
+    --     --   timeout = 30000,
+    --     --   temperature = 0.7,
+    --     --   max_tokens = 2000,
+    --   },
+    -- },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = 'make',
     -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
@@ -1098,6 +1123,42 @@ require('lazy').setup({
         ft = { 'markdown', 'Avante' },
       },
     },
+  },
+  -- oil
+  {
+  -- Plugin: oil.nvim
+  -- URL: https://github.com/stevearc/oil.nvim
+  -- Description: A Neovim plugin for managing and navigating directories.
+  'stevearc/oil.nvim',
+  opts = {
+    -- Key mappings for oil.nvim actions
+    keymaps = {
+      ['g?'] = 'actions.show_help', -- Show help
+      ['<CR>'] = 'actions.select', -- Select entry
+      ['<C-M-s>'] = { 'actions.select', opts = { vertical = true }, desc = 'Open the entry in a vertical split' }, -- Open entry in vertical split
+      ['<C-d>'] = { 'actions.select', opts = { horizontal = true }, desc = 'Open the entry in a horizontal split' }, -- Open entry in horizontal split
+      ['<C-t>'] = { 'actions.select', opts = { tab = true }, desc = 'Open the entry in new tab' }, -- Open entry in new tab
+      ['<C-p>'] = 'actions.preview', -- Preview entry
+      ['<C-c>'] = 'actions.close', -- Close oil.nvim
+      ['<C-l>'] = 'actions.refresh', -- Refresh oil.nvim
+      ['-'] = 'actions.parent', -- Go to parent directory
+      ['_'] = 'actions.open_cwd', -- Open current working directory
+      ['`'] = 'actions.cd', -- Change directory
+      ['~'] = { 'actions.cd', opts = { scope = 'tab' }, desc = ':tcd to the current oil directory' }, -- Change directory for the current tab
+      ['gs'] = 'actions.change_sort', -- Change sorting method
+      ['gx'] = 'actions.open_external', -- Open entry with external application
+      ['g.'] = 'actions.toggle_hidden', -- Toggle hidden files
+      ['g\\'] = 'actions.toggle_trash', -- Toggle trash
+    },
+    use_default_keymaps = false, -- Do not use default key mappings
+  },
+  -- Optional dependencies
+  dependencies = {
+    -- Plugin: nvim-web-devicons
+    -- URL: https://github.com/nvim-tree/nvim-web-devicons
+    -- Description: A Lua fork of vim-web-devicons for Neovim.
+    'nvim-tree/nvim-web-devicons',
+  },
   },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
