@@ -11,7 +11,12 @@ return {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
     },
-    config = true,
+    config = function()
+      local neogit = require 'neogit'
+      vim.keymap.set('n', '<leader>gn', function()
+        neogit.open { kind = 'split' } -- Abre en un split horizontal
+      end, { noremap = true, silent = true, desc = 'Abrir Neogit en split horizontal' })
+    end,
   },
   {
     'https://github.com/tpope/vim-fugitive',
