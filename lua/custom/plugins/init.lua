@@ -16,6 +16,9 @@ return {
       vim.keymap.set('n', '<leader>gn', function()
         neogit.open { kind = 'split' } -- Abre en un split horizontal
       end, { noremap = true, silent = true, desc = 'Abrir Neogit en split horizontal' })
+      vim.keymap.set('n', '<leader>gv', function()
+        neogit.open { kind = 'vsplit' } -- Abre en un split vertical
+      end, { noremap = true, silent = true, desc = 'Abrir Neogit en split vertical' })
     end,
   },
   {
