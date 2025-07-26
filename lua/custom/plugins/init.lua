@@ -3,32 +3,32 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  {
-    'NeogitOrg/neogit',
-    dependencies = {
-      'nvim-lua/plenary.nvim', -- required
-      'sindrets/diffview.nvim', -- optional - Diff integration
-    },
-    config = function()
-      local neogit = require 'neogit'
-      vim.keymap.set('n', '<leader>gn', function()
-        neogit.open { kind = 'split' } -- Abre en un split horizontal
-      end, { noremap = true, silent = true, desc = 'Abrir Neogit en split horizontal' })
-      vim.keymap.set('n', '<leader>gv', function()
-        neogit.open { kind = 'vsplit' } -- Abre en un split vertical
-      end, { noremap = true, silent = true, desc = 'Abrir Neogit en split vertical' })
-    end,
-  },
-  {
-    'https://github.com/tpope/vim-fugitive',
-    config = function()
-      vim.keymap.set('n', '<leader>gs', ':G<CR>', { noremap = true, silent = true })
-      vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true })
-      vim.keymap.set('n', '<leader>gp', ':Git push<CR>', { noremap = true, silent = true })
-      vim.keymap.set('n', '<leader>gl', ':Git pull<CR>', { noremap = true, silent = true })
-      vim.keymap.set('n', '<leader>gd', ':Gdiffsplit<CR>', { noremap = true, silent = true })
-    end,
-  },
+  -- {
+  --   'NeogitOrg/neogit',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim', -- required
+  --     'sindrets/diffview.nvim', -- optional - Diff integration
+  --   },
+  --   config = function()
+  --     local neogit = require 'neogit'
+  --     vim.keymap.set('n', '<leader>gn', function()
+  --       neogit.open { kind = 'split' } -- Abre en un split horizontal
+  --     end, { noremap = true, silent = true, desc = 'Abrir Neogit en split horizontal' })
+  --     vim.keymap.set('n', '<leader>gv', function()
+  --       neogit.open { kind = 'vsplit' } -- Abre en un split vertical
+  --     end, { noremap = true, silent = true, desc = 'Abrir Neogit en split vertical' })
+  --   end,
+  -- },
+  -- {
+  --   'https://github.com/tpope/vim-fugitive',
+  --   config = function()
+  --     vim.keymap.set('n', '<leader>gs', ':G<CR>', { noremap = true, silent = true })
+  --     vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { noremap = true, silent = true })
+  --     vim.keymap.set('n', '<leader>gp', ':Git push<CR>', { noremap = true, silent = true })
+  --     vim.keymap.set('n', '<leader>gl', ':Git pull<CR>', { noremap = true, silent = true })
+  --     vim.keymap.set('n', '<leader>gd', ':Gdiffsplit<CR>', { noremap = true, silent = true })
+  --   end,
+  -- },
   {
     'nvim-treesitter/nvim-treesitter-context',
     config = function()
