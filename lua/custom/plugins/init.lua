@@ -3,7 +3,6 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'https://github.com/ThePrimeagen/vim-be-good',
   'https://github.com/Mofiqul/vscode.nvim',
   {
     'epwalsh/obsidian.nvim',

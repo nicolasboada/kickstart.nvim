@@ -170,6 +170,7 @@ vim.api.nvim_set_keymap('n', 'H', '^', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'L', '$', { noremap = true, silent = true })
 -- oil --
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+vim.keymap.set('n', '<leader>o', '<CMD>Oil .<CR>', { desc = 'Open Oil at CWD' })
 -- -- Gestor de proyectos
 -- require('project_nvim').setup {
 --   detection_methods = { 'lsp', 'pattern' },
