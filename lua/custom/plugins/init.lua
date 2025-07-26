@@ -4,23 +4,6 @@
 -- See the kickstart.nvim README for more information
 return {
   {
-    'epwalsh/obsidian.nvim',
-    version = '*', -- recommended, use latest release instead of latest commit
-    lazy = true,
-    ft = 'markdown',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-    opts = {
-      workspaces = {
-        {
-          name = 'personal',
-          path = '~/Dropbox/obsidian/notas',
-        },
-      },
-    },
-  },
-  {
     'NeogitOrg/neogit',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
