@@ -13,5 +13,9 @@ return {
         path = '~/Dropbox/obsidian/notas',
       },
     },
+    -- agregado para evitar warning
+    ui = {
+      enable = false,
+    },
   },
 }
