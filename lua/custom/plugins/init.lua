@@ -3,7 +3,6 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'https://github.com/Mofiqul/vscode.nvim',
   {
     'epwalsh/obsidian.nvim',
     version = '*', -- recommended, use latest release instead of latest commit
