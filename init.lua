@@ -200,9 +200,12 @@ vim.api.nvim_create_autocmd('VimEnter', {
   desc = 'Auto-open Oil when no files are given',
   group = vim.api.nvim_create_augroup('oil-auto-open', { clear = true }),
   callback = function(event)
-    -- Only if no arguments and current buffer is empty
+    -- Only if no arguments
     if vim.fn.argc() == 0 then
-      require('oil').open()
+      -- Schedule to run after UI is fully ready
+      vim.schedule(function()
+        require('oil').open()
+      end)
     end
   end,
 })
